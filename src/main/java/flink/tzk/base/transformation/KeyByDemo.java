@@ -18,6 +18,7 @@ public class KeyByDemo {
                 new Event("bob","//home?id=20",2200L));
         eventStream.keyBy(kv -> kv.user).max("timestamp").print("max:\t");
         eventStream.keyBy(kv -> kv.user).maxBy("timestamp").print("maxBy:\t");
+        System.out.println(eventStream);
         env.execute();
 
 
