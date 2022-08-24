@@ -2,7 +2,6 @@ package flink.tzk.base.transformation;
 
 import flink.tzk.bean.Event;
 
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
@@ -19,6 +18,7 @@ public class KeyByDemo {
                 new Event("bob","//home?id=20",2200L));
         eventStream.keyBy(kv -> kv.user).max("timestamp").print("max:\t");
         eventStream.keyBy(kv -> kv.user).maxBy("timestamp").print("maxBy:\t");
+        System.out.println(eventStream);
         System.out.println("-----------------------------");
         env.execute();
 
