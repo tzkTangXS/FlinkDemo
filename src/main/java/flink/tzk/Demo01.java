@@ -23,6 +23,7 @@ public class Demo01 {
         KeyedStream<Tuple2<String, Long>, Object> tuple2ObjectKeyedStream = wordAndTuple.keyBy(kv -> kv.f0);
         SingleOutputStreamOperator<Tuple2<String, Long>> result = tuple2ObjectKeyedStream.sum(1);
         result.print();
+        result.print();
         env.execute();
     }
 }
