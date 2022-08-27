@@ -24,9 +24,9 @@ public class RichFunctionDemo {
         SingleOutputStreamOperator<Long> map = eventStream.map(new MyRichMapper()).setParallelism(2);
         map.printToErr();
         //1.shuffle分区:随机发牌
-//        map.shuffle().print().setParallelism(2);
+//       map.shuffle().print().setParallelism(2);
         //2.轮询一条龙服务分区
-//        map.rebalance();
+//       map.rebalance();
         //3. 重缩放分区，自己小组类进行分区。
 //        map.rescale();
 //        4. 广播分区

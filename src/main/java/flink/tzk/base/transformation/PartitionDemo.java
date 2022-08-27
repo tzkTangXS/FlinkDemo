@@ -31,6 +31,7 @@ public class PartitionDemo {
         integerDataStreamSource.map(x-> Tuple2.of(x,1)).returns(Types.TUPLE(Types.INT,Types.INT)).rescale().writeAsCsv("input/test12.csv").setParallelism(1);
         DataStreamSource<Integer> integerDataStreamSource1 = env.fromElements(1, 2, 3, 4, 5, 56, 6);
 
+
         env.execute();
     }
 }
