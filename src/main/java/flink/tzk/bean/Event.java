@@ -3,7 +3,7 @@ package flink.tzk.bean;
 
 import java.sql.Timestamp;
 
-public class Event {
+public class Event{
     public String user;
     public String url;
     public Long timestamp;

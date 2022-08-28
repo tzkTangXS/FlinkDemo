@@ -1,15 +1,16 @@
-package flink.tzk.base.transformation;
+package flink.tzk.base.watermark;
 
 import flink.tzk.bean.Event;
 import org.apache.flink.api.common.eventtime.*;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import java.time.Duration;
 
 public class WaterMarkDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         //设置周期waterMark的触发生成机制的周期
         env.getConfig().setAutoWatermarkInterval(100);
@@ -30,11 +31,13 @@ public class WaterMarkDemo {
                 return null;
             }
         });*/
-        eventStream.assignTimestampsAndWatermarks(WatermarkStrategy.<Event>forBoundedOutOfOrderness(Duration.ofSeconds(2)).withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
+        SingleOutputStreamOperator<Event> eventSingleOutputStreamOperator = eventStream.assignTimestampsAndWatermarks(WatermarkStrategy.<Event>forBoundedOutOfOrderness(Duration.ofSeconds(2)).withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
             @Override
             public long extractTimestamp(Event event, long l) {
                 return event.timestamp;
             }
         }));
+        eventSingleOutputStreamOperator.print().setParallelism(1);
+        env.execute();
     }
 }
